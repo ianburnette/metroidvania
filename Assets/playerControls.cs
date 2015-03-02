@@ -9,7 +9,6 @@ public class playerControls : MonoBehaviour {
 	public LayerMask groundMask;
 	public LayerMask slopeMask;
 	public Transform bodySprite;
-	public SpriteRenderer crosshair;
 	public float diagRayDist = .75f;
 	public float horRayDist = .3f;
 	public float vertRayDist = .7f;
@@ -17,14 +16,17 @@ public class playerControls : MonoBehaviour {
 	public bool running, grounded, onSlope;
 	public bool facingRight = false;
 	PlayerInventory inventoryScript;
+	GunControlsNonAiming gunControls;
 	public float slopeModifier;
 	public float baseSlopeModifier;
 	public float hugGroundHeight;
 	Animator anim;
 	public float grabOffsetH, grabOffsetL, grabDistance;
+	public float highGrav, baseGrav;
 
 	void Start () {
 		inventoryScript = GetComponent<PlayerInventory>();
+		gunControls = GetComponent<GunControlsNonAiming>();
 		anim = GetComponent<Animator>();
 	}
 	
@@ -47,9 +49,9 @@ public class playerControls : MonoBehaviour {
 	
 	void MoreGravity(){
 		if (grounded && !onSlope){
-			rigidbody2D.gravityScale = 20;
+			rigidbody2D.gravityScale = highGrav;
 		}else if (!onSlope){
-			rigidbody2D.gravityScale = 10;
+			rigidbody2D.gravityScale = baseGrav;
 		}
 	}
 	
@@ -91,7 +93,7 @@ public class playerControls : MonoBehaviour {
 	
 	void GetInput(){
 		h = Input.GetAxisRaw("Horizontal");
-		if (!crosshair.enabled){
+		if (!gunControls.aiming){
 			if (h>0){
 				facingRight=true;
 			} else if (h<0){
@@ -125,17 +127,20 @@ public class playerControls : MonoBehaviour {
 		if (belowHit.transform!=null){	Debug.DrawRay(transform.position, -Vector2.up*vertRayDist, Color.blue);	}
 		
 		
-		if ((belowHit.transform!=null) || ((seHit.transform!=null || swHit.transform!=null) && (eHit.transform==null && wHit.transform==null ))){
-			grounded = true;}
-		else{ 
+		if ((belowHit.transform!=null) /* || ((seHit.transform!=null || swHit.transform!=null) && (eHit.transform==null && wHit.transform==null */ ){
+			grounded = true;
+			transform.position = new Vector2(transform.position.x, belowHit.point.y+hugGroundHeight);
+		}else{ 
 			grounded = false;
+		}
+		if (seSlopeHit.transform!=null || swSlopeHit.transform!=null){
+			grounded = true;
+			RaycastHit2D belowSlopeHitHug = Physics2D.Raycast (transform.position, -Vector2.up*vertRayDist*2, vertRayDist*2, groundMask);
+			transform.position = new Vector2 (transform.position.x, belowSlopeHitHug.point.y + hugGroundHeight);
 		}	
 		CheckForSlope (seSlopeHit, swSlopeHit, belowSlopeHit);
 		
-		if (seSlopeHit.transform!=null || swSlopeHit.transform!=null){
-			RaycastHit2D belowSlopeHitHug = Physics2D.Raycast (transform.position, -Vector2.up*vertRayDist*2, vertRayDist*2, groundMask);
-			transform.position = new Vector2 (transform.position.x, belowSlopeHitHug.point.y + hugGroundHeight);
-		}
+		
 	}
 	
 	void CheckForSlope(RaycastHit2D seSlopeHit, RaycastHit2D swSlopeHit, RaycastHit2D belowSlopeHit){
@@ -205,22 +210,26 @@ public class playerControls : MonoBehaviour {
 	}
 	
 	void Animate(){
-		if (!crosshair.enabled){
+		
+		
+		if (!gunControls.aiming){
 			if (facingRight){
 				bodySprite.transform.localScale = new Vector3 (1,1,1);
 			}else if (!facingRight){
 				bodySprite.transform.localScale = new Vector3 (-1,1,1);
 			}
 		}else{
-			if (crosshair.transform.position.x > transform.position.x){
+			/* if (crosshair.transform.position.x > transform.position.x){
 				bodySprite.transform.localScale = new Vector3 (1,1,1);
 				
 				facingRight = true;
 			}else{
 				bodySprite.transform.localScale = new Vector3 (-1,1,1);
 				facingRight = false;
-			}
+			} */
 		}
+		
+		
 		if (h==0){
 			anim.SetBool("moving", false);
 		}else if (running){

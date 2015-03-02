@@ -31,7 +31,7 @@ public class gunControls : MonoBehaviour {
 	}
 	
 	void GetInput(){
-		print (Input.GetAxis("Scanner"));
+//print (Input.GetAxis("Scanner"));
 		//if (Input.GetButton("Scanner")){
 		if (Input.GetButtonDown("Aim")){
 			ResetCursor();

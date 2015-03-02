@@ -3,9 +3,14 @@ using System.Collections;
 
 public class bulletHit : MonoBehaviour {
 
+	public float gravAmt = 2f;
+	public float timeToGrav = 3;
+	public int timeToDie = 5;
+
 	// Use this for initialization
 	void Start () {
-		Invoke("DestroySelf", 5f);
+		Invoke("TurnOnGravity", timeToGrav);
+		Invoke("DestroySelf", timeToDie);
 	}
 	
 	// Update is called once per frame
@@ -14,6 +19,10 @@ public class bulletHit : MonoBehaviour {
 			col.SendMessage("BulletHit");
 		}
 		DestroySelf();
+	}
+	
+	void TurnOnGravity(){
+		rigidbody2D.gravityScale=gravAmt;
 	}
 	
 	void DestroySelf(){
