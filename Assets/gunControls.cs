@@ -83,7 +83,7 @@ public class gunControls : MonoBehaviour {
 	
 	void Fire(){
 		Transform newBullet = (Transform)Instantiate(bulletPrefab, gunBarrel.position, Quaternion.identity);
-		newBullet.rigidbody2D.velocity = gunArm.up * bulletSpeed;
+		newBullet.GetComponent<Rigidbody2D>().velocity = gunArm.up * bulletSpeed;
 	}
 	
 	void GetRotation(){

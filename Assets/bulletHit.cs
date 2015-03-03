@@ -22,7 +22,7 @@ public class bulletHit : MonoBehaviour {
 	}
 	
 	void TurnOnGravity(){
-		rigidbody2D.gravityScale=gravAmt;
+		GetComponent<Rigidbody2D>().gravityScale=gravAmt;
 	}
 	
 	void DestroySelf(){

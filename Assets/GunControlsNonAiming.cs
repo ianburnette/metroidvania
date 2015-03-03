@@ -114,7 +114,7 @@ public class GunControlsNonAiming : MonoBehaviour {
 	void Fire(){
 
 		Transform newBullet = (Transform)Instantiate(bulletPrefab, gunBarrel.position, Quaternion.identity);
-		newBullet.rigidbody2D.velocity = gunBarrel.up * bulletSpeed * gunArm.localScale.y;
+		newBullet.GetComponent<Rigidbody2D>().velocity = gunBarrel.up * bulletSpeed * gunArm.localScale.y;
 		//newBullet.rigidbody2D.AddForce(Vector2.up * Random.Range(-1f,1f) * 100f);
 	}
 	

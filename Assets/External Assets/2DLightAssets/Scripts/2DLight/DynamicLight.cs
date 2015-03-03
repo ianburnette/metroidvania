@@ -414,7 +414,7 @@ public class DynamicLight : MonoBehaviour {
 		
 		lightMesh.triangles = triangles;												
 		//lightMesh.RecalculateNormals();
-		renderer.sharedMaterial = lightMaterial;
+		GetComponent<Renderer>().sharedMaterial = lightMaterial;
 	}
 
 	void sortList(List<verts> lista){

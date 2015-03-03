@@ -143,7 +143,7 @@ public class TileWindow : EditorWindow
 											newgo.layer = selectedLayer;
 										// UPDATED							// ADDED Order in Layers "VEEBEEMEE GAMES" 18 FEB 201
 										if(addOrderInLayer)
-											newgo.GetComponent<SpriteRenderer>().renderer.sortingOrder = orderInLayer;
+											newgo.GetComponent<SpriteRenderer>().GetComponent<Renderer>().sortingOrder = orderInLayer;
 									}
 								}
 								// IF PAINT OVER OPTION SELECTED THEN...
@@ -177,7 +177,7 @@ public class TileWindow : EditorWindow
 												newgo.layer = selectedLayer;
 											// UPDATED							// ADDED Order in Layers "VEEBEEMEE GAMES" 18 FEB 2015
 											if(addOrderInLayer)
-												newgo.GetComponent<SpriteRenderer>().renderer.sortingOrder = orderInLayer;
+												newgo.GetComponent<SpriteRenderer>().GetComponent<Renderer>().sortingOrder = orderInLayer;
 											
 											brk++;
 										}
@@ -201,7 +201,7 @@ public class TileWindow : EditorWindow
 											newgo.layer = selectedLayer;
 										// UPDATED							// ADDED Order in Layers "VEEBEEMEE GAMES" 18 FEB 201
 										if(addOrderInLayer)
-											newgo.GetComponent<SpriteRenderer>().renderer.sortingOrder = orderInLayer;
+											newgo.GetComponent<SpriteRenderer>().GetComponent<Renderer>().sortingOrder = orderInLayer;
 									}
 								}
 							} // END OF SELECTED != DRAWOPTION.Select

@@ -29,11 +29,7 @@ public class playerControls : MonoBehaviour {
 		gunControls = GetComponent<GunControlsNonAiming>();
 		anim = GetComponent<Animator>();
 	}
-	
-	void Update () {
-	
-	}
-	
+
 	void FixedUpdate(){
 		CheckBelow();
 		if (canGrab){
@@ -49,9 +45,9 @@ public class playerControls : MonoBehaviour {
 	
 	void MoreGravity(){
 		if (grounded && !onSlope){
-			rigidbody2D.gravityScale = highGrav;
+			GetComponent<Rigidbody2D>().gravityScale = highGrav;
 		}else if (!onSlope){
-			rigidbody2D.gravityScale = baseGrav;
+			GetComponent<Rigidbody2D>().gravityScale = baseGrav;
 		}
 	}
 	
@@ -68,7 +64,7 @@ public class playerControls : MonoBehaviour {
 			}
 		}
 		if (hanging){
-			rigidbody2D.velocity = Vector2.zero;
+			GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 			HangControls();
 		}
 	}
@@ -129,7 +125,7 @@ public class playerControls : MonoBehaviour {
 		
 		if ((belowHit.transform!=null) /* || ((seHit.transform!=null || swHit.transform!=null) && (eHit.transform==null && wHit.transform==null */ ){
 			grounded = true;
-			transform.position = new Vector2(transform.position.x, belowHit.point.y+hugGroundHeight);
+			//transform.position = new Vector2(transform.position.x, belowHit.point.y+hugGroundHeight);
 		}else{ 
 			grounded = false;
 		}
@@ -145,12 +141,12 @@ public class playerControls : MonoBehaviour {
 	
 	void CheckForSlope(RaycastHit2D seSlopeHit, RaycastHit2D swSlopeHit, RaycastHit2D belowSlopeHit){
 		if (seSlopeHit.transform!=null && belowSlopeHit.transform!=null && h==0){ //detecting slope to right
-			rigidbody2D.gravityScale = 0;
-			rigidbody2D.velocity = new Vector2(0, 0);
+			GetComponent<Rigidbody2D>().gravityScale = 0;
+			GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 			onSlope = true;
 		}else if (swSlopeHit.transform!=null && belowSlopeHit.transform!=null && h == 0){ //slope to left
-			rigidbody2D.gravityScale = 0;
-			rigidbody2D.velocity = new Vector2(0, 0);
+			GetComponent<Rigidbody2D>().gravityScale = 0;
+			GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 			onSlope = true;
 		}else if (seSlopeHit.transform!=null && belowSlopeHit.transform!=null && h!=0){
 			slopeModifier = -baseSlopeModifier;
@@ -170,9 +166,9 @@ public class playerControls : MonoBehaviour {
 		//if (grounded){	
 			slopeModifier *= h;
 			if (!running){
-				rigidbody2D.velocity = new Vector2(h * walkSpeed, rigidbody2D.velocity.y + slopeModifier);
+				GetComponent<Rigidbody2D>().velocity = new Vector2(h * walkSpeed, GetComponent<Rigidbody2D>().velocity.y + slopeModifier);
 			}else{
-				rigidbody2D.velocity = new Vector2(h * runSpeed, rigidbody2D.velocity.y + slopeModifier);
+				GetComponent<Rigidbody2D>().velocity = new Vector2(h * runSpeed, GetComponent<Rigidbody2D>().velocity.y + slopeModifier);
 			}
 	//	}
 	}
@@ -186,26 +182,26 @@ public class playerControls : MonoBehaviour {
 	
 	void CheckToStopJump(){
 
-		if (rigidbody2D.velocity.y > .01){
-			rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, .01f);
+		if (GetComponent<Rigidbody2D>().velocity.y > .01){
+			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, .01f);
 		//	rigidbody2D.AddForce(Vector2.right * jumpHorSpeed * h);
 		}
 	}
 	
 	void Jump(){
 		if (inventoryScript.highJump){
-			rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, highJumpSpeed);
+			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, highJumpSpeed);
 		}else{
-			rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, jumpSpeed);
+			GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, jumpSpeed);
 		}
 	}
 	
 	void LimitVerticalSpeed(){
-		if (Mathf.Abs(rigidbody2D.velocity.y) > maxVerticalSpeed){
+		if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.y) > maxVerticalSpeed){
 			float velToSet = 0;
-			if (rigidbody2D.velocity.y > 0){ velToSet = maxVerticalSpeed;}
-			else if (rigidbody2D.velocity.y<0){ velToSet = -maxVerticalSpeed;}
-			rigidbody2D.velocity = new Vector2 (rigidbody2D.velocity.x, velToSet);
+			if (GetComponent<Rigidbody2D>().velocity.y > 0){ velToSet = maxVerticalSpeed;}
+			else if (GetComponent<Rigidbody2D>().velocity.y<0){ velToSet = -maxVerticalSpeed;}
+			GetComponent<Rigidbody2D>().velocity = new Vector2 (GetComponent<Rigidbody2D>().velocity.x, velToSet);
 		}
 	}
 	
@@ -240,10 +236,10 @@ public class playerControls : MonoBehaviour {
 			anim.SetBool("moving", true);
 		}
 		if (!grounded){
-			if (rigidbody2D.velocity.y>=0){
+			if (GetComponent<Rigidbody2D>().velocity.y>=0){
 				anim.SetBool("jumping", true);
 				anim.SetBool("falling", false);
-			}else if (rigidbody2D.velocity.y<0){
+			}else if (GetComponent<Rigidbody2D>().velocity.y<0){
 				anim.SetBool("jumping", false);
 				anim.SetBool("falling", true);
 			}
