@@ -28,6 +28,10 @@ TextureImporter:
     21300046: char_sprite_sheet_25
     21300048: char_sprite_sheet_26
     21300050: char_sprite_sheet_25
+    21300052: char_sprite_sheet_26
+    21300054: char_sprite_sheet_27
+    21300056: char_sprite_sheet_28
+    21300058: char_sprite_sheet_29
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -326,6 +330,46 @@ TextureImporter:
         y: 156
         width: 32
         height: 40
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: char_sprite_sheet_26
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: char_sprite_sheet_27
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: char_sprite_sheet_28
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 288
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: char_sprite_sheet_29
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 288
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
